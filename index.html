@@ -1,7 +1,8 @@
 <html>
     <head>
         <title>Pomodoro.</title>
-        <link rel="stylesheet" href="bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/styles.css">
     </head>
 
     <body>
@@ -29,10 +30,16 @@
             {{#tasks}}
             <tr>
                 <td>
-                    Task!
+                    {{name}}
+                </td>
+                <td>
+                    <span class="glyphicon glyphicon-{{complete ? 'check' : 'unchecked'}}"></span>
                 </td>
             </tr>
             {{/tasks}}
+            <tr>
+                <td><span class="glyphicon glyphicon-plus-sign"></span>Add a task</td>
+            </tr>
         </table>
     </script>
     <script src="js/Ractive.min.js"></script> <!-- TOOO: switch to Ractive runtime -->
