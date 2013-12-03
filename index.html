@@ -1,26 +1,40 @@
 <html>
-<head>
-    <title>Pomodoro.</title>
-    <script>Ractive.min.js</script> <!-- TOOO: switch to Ractive runtime -->
-    <script>templates.js</script>
-    <script>pomodoro.js</script>
-    <link rel="stylesheet" href="bootstrap.min.css">
-</head>
+    <head>
+        <title>Pomodoro.</title>
+        <link rel="stylesheet" href="bootstrap.min.css">
+    </head>
 
-<body>
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Pomodoro</h1>
+    <body>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>Pomodoro</h1>
+            </div>
         </div>
-    </div>
 
-    <div id="application" class="container"></div>
+        <div id="application" class="container"></div>
 
-    <div class="container">
-        <hr />
-        <footer>
-            Based on <a href="http://ractivejs.org">RactiveJS</a>.     
-        </footer>
-    </div>
-</body>
+        <div class="container">
+            <hr />
+            <footer>
+                Based on <a href="http://ractivejs.org">RactiveJS</a>.     
+            </footer>
+        </div>
+    </body>
+
+    <!-- Templates -->
+    <script id='pomodoro' type='text/ractive'>
+        <div class="timer">{{time}}</div>
+
+        <table class="tasks">
+            {{#tasks}}
+            <tr>
+                <td>
+                    Task!
+                </td>
+            </tr>
+            {{/tasks}}
+        </table>
+    </script>
+    <script src="js/Ractive.min.js"></script> <!-- TOOO: switch to Ractive runtime -->
+    <script src="js/script.js"></script>
 </html>
