@@ -28,7 +28,7 @@
 
         <table class="tasks">
             {{#tasks}}
-            <tr>
+            <tr on-tap="start">
                 <td>
                     {{name}}
                 </td>
@@ -38,7 +38,10 @@
             </tr>
             {{/tasks}}
             <tr>
-                <td><span class="glyphicon glyphicon-plus-sign"></span>Add a task</td>
+                <td>
+                    <input on-enter-change='new' placeholder='Add a new task' autofocus>
+                </td>
+                <td></td>
             </tr>
         </table>
     </script>

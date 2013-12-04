@@ -14,4 +14,13 @@
         template : '#pomodoro',
         data : data
     })
+
+    ractive.on('new_task', function(evt){
+        data.tasks.push({
+            name : evt.node.value,
+            time : 0
+        })
+
+        ractive.update();
+    });
 })()
