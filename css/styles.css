@@ -15,9 +15,9 @@ table.tasks td.name span {
     padding: .5em;
 }
 
-table.tasks td.bar{
+table.tasks td .bar{
     float: right;
-    background: '#ddd';
+    background: #ddd;
     height: 100%;
     width: 25%;
 }

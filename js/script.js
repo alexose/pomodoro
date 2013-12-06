@@ -12,6 +12,7 @@
             return ts;
         },
         getWidth : function(ts){
+            console.log(ts);
             return (ts / pomodoro) * 100;
         },
     };
@@ -23,7 +24,26 @@
     })
     
     ractive.on('start', function(evt){
-        console.log(evt);
+
+        var c = evt.context,
+            interval = 1000 * 1, // Every one second
+            ractive = this;
+
+        this.data.active = c;
+
+        ractive.update();
+
+        // Begin updating status bar
+        var id = setInterval(function(){
+            c.remaining -= interval;
+            
+            ractive.update();
+            
+            if (c.remaining >= pomodoro){
+                c.remaining = pomodoro;
+                clearInterval(id);
+            }
+        }, interval)
     });
 
     ractive.on('new', function(evt){
