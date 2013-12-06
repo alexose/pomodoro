@@ -9,10 +9,13 @@
             { name : 'Task four' , remaining : 0 },
         ],
         format : function(ts){
-            return ts;
+            var total = ts / 1000,
+                seconds = total % 60,
+                minutes = (total - seconds) / 60;
+
+            return minutes + ':' + (seconds || "00");
         },
         getWidth : function(ts){
-            console.log(ts);
             return (ts / pomodoro) * 100;
         },
     };
