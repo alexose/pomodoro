@@ -1,24 +1,35 @@
 (function(){
+    var pomodoro = 1000 * 60 * 25;
+   
     var data = {
-        time : '25:00',
         tasks : [
-            { name : 'Task one' , completed : false },
-            { name : 'Task two' , completed : true },
-            { name : 'Task three' , completed : true },
-            { name : 'Task four' , completed : false },
-        ]
-    }
+            { name : 'Task one' , remaining : 0 },
+            { name : 'Task two' , remaining : pomodoro }, 
+            { name : 'Task three' , remaining : pomodoro },
+            { name : 'Task four' , remaining : 0 },
+        ],
+        format : function(ts){
+            return ts;
+        },
+        getWidth : function(ts){
+            return (ts / pomodoro) * 100;
+        },
+    };
 
     var ractive = new Ractive({
         el : 'application',
         template : '#pomodoro',
         data : data
     })
+    
+    ractive.on('start', function(evt){
+        console.log(evt);
+    });
 
-    ractive.on('new_task', function(evt){
+    ractive.on('new', function(evt){
         data.tasks.push({
             name : evt.node.value,
-            time : 0
+            remaining : 0
         })
 
         ractive.update();

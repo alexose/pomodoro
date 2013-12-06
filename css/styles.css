@@ -2,7 +2,22 @@ table.tasks {
     width: 100%;
 }
 
-table.tasks td {
-    padding: .5em;
+table.tasks tr {
     border-bottom : 1px solid #ddd;
+}
+
+table.tasks td.name {
+    width: 70%;
+}
+
+table.tasks td.name span {
+    display: block;
+    padding: .5em;
+}
+
+table.tasks td.bar{
+    float: right;
+    background: '#ddd';
+    height: 100%;
+    width: 25%;
 }

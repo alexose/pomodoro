@@ -6,44 +6,52 @@
     </head>
 
     <body>
-        <div class="jumbotron">
-            <div class="container">
-                <h1>Pomodoro</h1>
-            </div>
-        </div>
-
-        <div id="application" class="container"></div>
-
-        <div class="container">
-            <hr />
-            <footer>
-                Based on <a href="http://ractivejs.org">RactiveJS</a>.     
-            </footer>
+        <div id="application">
         </div>
     </body>
 
     <!-- Templates -->
     <script id='pomodoro' type='text/ractive'>
-        <div class="timer">{{time}}</div>
+        <div class="jumbotron">
+            <div class="container">
+                <h1>
+                    {{#active}}
+                    {{name}} - {{remaining}}
+                    {{/active}}
+                    {{^active}}
+                    Pomodoro
+                    {{/active}}
+                </h1>
+            </div>
+        </div>
 
-        <table class="tasks">
-            {{#tasks}}
-            <tr on-tap="start">
-                <td>
-                    {{name}}
-                </td>
-                <td>
-                    <span class="glyphicon glyphicon-{{complete ? 'check' : 'unchecked'}}"></span>
-                </td>
-            </tr>
-            {{/tasks}}
-            <tr>
-                <td>
-                    <input on-enter-change='new' placeholder='Add a new task' autofocus>
-                </td>
-                <td></td>
-            </tr>
-        </table>
+        <div class="container">
+            <table class="tasks table">
+                {{#tasks}}
+                <tr on-tap="start">
+                    <td class="name">
+                        <span>{{name}}</span>
+                    </td>
+                    <td>
+                        <div class="bar">&nbsp;</div>
+                    </td>
+                </tr>
+                {{/tasks}}
+                <tr>
+                    <td>
+                        <input on-enter-change='new' placeholder='Add a new task' autofocus>
+                    </td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="container">
+            <hr />
+            <footer>
+                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.     
+            </footer>
+        </div>
     </script>
     <script src="js/Ractive.min.js"></script> <!-- TOOO: switch to Ractive runtime -->
     <script src="js/script.js"></script>
