@@ -52,7 +52,7 @@
     ractive.on('new', function(evt){
         data.tasks.push({
             name : evt.node.value,
-            remaining : 0
+            remaining : pomodoro 
         })
 
         ractive.update();
