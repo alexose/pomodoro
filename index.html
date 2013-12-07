@@ -28,7 +28,7 @@
         <div class="container">
             <table class="tasks table">
                 {{#tasks}}
-                <tr on-tap="start">
+                <tr decorator='sortable' on-tap="start">
                     <td class="name">
                         <span>{{name}}</span>
                     </td>
@@ -53,6 +53,7 @@
             </footer>
         </div>
     </script>
-    <script src="js/Ractive.min.js"></script> <!-- TOOO: switch to Ractive runtime -->
+    <script src="js/Ractive.js"></script> <!-- TOOO: switch to Ractive runtime -->
+    <script src="js/Ractive-decorators-sortable.js"></script> <!-- TOOO: switch to Ractive runtime -->
     <script src="js/script.js"></script>
 </html>
