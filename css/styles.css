@@ -3,11 +3,20 @@ table.tasks {
 }
 
 table.tasks tr {
-    border-bottom : 1px solid #ddd;
+    cursor: pointer;
+}
+
+table.tasks tr {
+    border-bottom : 1px solid #eee;
+}
+
+
+table.tasks tr.add-new {
+    cursor: default;
 }
 
 table.tasks td.name {
-    width: 70%;
+    width: 80%;
 }
 
 table.tasks td.name span {
@@ -15,9 +24,6 @@ table.tasks td.name span {
     padding: .5em;
 }
 
-table.tasks td .bar{
-    float: right;
-    background: #ddd;
-    height: 100%;
-    width: 25%;
+table.tasks td div.progress{
+    margin-bottom: 0;
 }

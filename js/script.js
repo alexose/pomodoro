@@ -3,10 +3,10 @@
    
     var data = {
         tasks : [
-            { name : 'Task one' , remaining : 0 },
-            { name : 'Task two' , remaining : pomodoro }, 
-            { name : 'Task three' , remaining : pomodoro },
-            { name : 'Task four' , remaining : 0 },
+            { name : 'Task one' , remaining : 0, active : false },
+            { name : 'Task two' , remaining : pomodoro, active : false }, 
+            { name : 'Task three' , remaining : pomodoro, active : false },
+            { name : 'Task four' , remaining : 0, active: false },
         ],
         format : function(ts){
             var total = ts / 1000,
@@ -16,7 +16,7 @@
             return minutes + ':' + (seconds || "00");
         },
         getWidth : function(ts){
-            return (ts / pomodoro) * 100;
+            return (1 - (ts / pomodoro)) * 100;
         },
     };
 
@@ -33,6 +33,7 @@
             ractive = this;
 
         this.data.active = c;
+        c.active = true;
 
         ractive.update();
 
@@ -52,7 +53,8 @@
     ractive.on('new', function(evt){
         data.tasks.push({
             name : evt.node.value,
-            remaining : pomodoro 
+            remaining : pomodoro,
+            active : false
         })
 
         ractive.update();

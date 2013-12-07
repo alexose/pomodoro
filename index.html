@@ -33,13 +33,15 @@
                         <span>{{name}}</span>
                     </td>
                     <td>
-                        <div class="bar" style="width: {{ getWidth(remaining) }}%">&nbsp;</div>
+                        <div class="progress {{ active ? 'progress-striped active' : '' }}">
+                            <div class="progress-bar"  role="progressbar" aria-valuemax="100" style="width: {{getWidth(remaining)}}%"></div>
+                        </div>
                     </td>
                 </tr>
                 {{/tasks}}
-                <tr>
+                <tr class="add-new">
                     <td>
-                        <input on-enter-change='new' placeholder='Add a new task' autofocus>
+                        <span editable on-enter-change='new'>Add a new task</span>
                     </td>
                     <td></td>
                 </tr>
