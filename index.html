@@ -30,7 +30,10 @@
                 {{#tasks}}
                 <tr decorator='sortable' on-tap="start">
                     <td class="name">
-                        <span>{{name}}</span>
+                        <span>
+                            {{#active}}&raquo; {{/active}}
+                            {{name}}
+                        </span>
                     </td>
                     <td>
                         <div class="progress {{ active ? 'progress-striped active' : '' }}">
@@ -41,7 +44,7 @@
                 {{/tasks}}
                 <tr class="add-new">
                     <td>
-                        <input on-enter-change='new' placeholder='Add a new task' />
+                        <input on-enter='new' on-blur="clear" placeholder='Add a new task' />
                     </td>
                     <td></td>
                 </tr>

@@ -60,4 +60,8 @@
 
         ractive.update();
     });
+
+    ractive.on('clear', function(evt){
+        evt.node.value = "";
+    });
 })()
