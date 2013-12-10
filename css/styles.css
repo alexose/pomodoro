@@ -15,15 +15,21 @@ table.tasks tr.add-new {
     cursor: default;
 }
 
-table.tasks td.name {
+table.tasks tr td.name {
     width: 80%;
 }
 
-table.tasks td.name span {
+table.tasks tr td.name span {
     display: block;
     padding: .5em;
 }
 
-table.tasks td div.progress{
+table.tasks tr td div.progress{
     margin-bottom: 0;
+}
+
+table.tasks tr td input{
+    width: 100%;
+    padding: 8px;
+    border: 0;
 }

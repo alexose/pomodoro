@@ -3,10 +3,10 @@
    
     var data = {
         tasks : [
-            { name : 'Task one' , remaining : 0, active : false },
-            { name : 'Task two' , remaining : pomodoro, active : false }, 
-            { name : 'Task three' , remaining : pomodoro, active : false },
-            { name : 'Task four' , remaining : 0, active: false },
+            { name : 'Task one' , remaining : 0, date : 1386641200000, active : false },
+            { name : 'Task two' , remaining : pomodoro, date : 1386643229000, active : false }, 
+            { name : 'Task three' , remaining : pomodoro, date : 1386641219000, active : false },
+            { name : 'Task four' , remaining : 0, date : 1386641221000, active: false },
         ],
         format : function(ts){
             var total = ts / 1000,
@@ -54,6 +54,7 @@
         data.tasks.push({
             name : evt.node.value,
             remaining : pomodoro,
+            date : +new Date(),
             active : false
         })
 
