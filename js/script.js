@@ -36,21 +36,20 @@
         }
     }
 
-    var data = {
-        tasks : load(),
-        format : function(ts){
-            var total = ts / 1000,
-                seconds = total % 60,
-                minutes = (total - seconds) / 60;
+    var tasks = load(),
+        data = {
+            tasks : tasks,
+            format : function(ts){
+                var total = ts / 1000,
+                    seconds = total % 60,
+                    minutes = (total - seconds) / 60;
 
-            return minutes + ':' + ("0" + seconds).slice(-2); // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
-        },
-        getWidth : function(ts){
-            return (1 - (ts / pomodoro)) * 100;
-        },
-    };
-
-    // TODO: trigger active
+                return minutes + ':' + ("0" + seconds).slice(-2); // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
+            },
+            getWidth : function(ts){
+                return (1 - (ts / pomodoro)) * 100;
+            },
+        };
 
     var app = Ractive.extend({
         update : function(){
@@ -64,32 +63,61 @@
         template : '#pomodoro',
         data : data
     })
-    
-    ractive.on('start', function(evt){
 
+    // Find and trigger active tasks
+    tasks.forEach(function(d){
+        if (d.active){
+            doStart.call(ractive, { context : d });
+        }
+    });
+    
+    ractive.on('start', doStart);
+    ractive.on('new'  , doNew);
+    ractive.on('reset', doReset);
+    ractive.on('clear', doClear);
+    
+    var interval;
+    function doStart(evt){
         var c = evt.context,
-            interval = 1000 * 1, // Every one second
+            increment = 1000 * 1, // Every one second
             ractive = this;
 
+        doStop.call(this, evt);
+
+        // Activate task in context
         this.data.active = c;
         c.active = true;
 
         ractive.update();
 
         // Begin updating status bar
-        var id = setInterval(function(){
-            c.remaining -= interval;
+        interval = setInterval(function(){
+            c.remaining -= increment;
+            
+            if (c.remaining <= 0){
+                c.remaining = 0;
+                doStop.call(ractive, evt);
+            }
             
             ractive.update();
             
-            if (c.remaining >= pomodoro){
-                c.remaining = pomodoro;
-                clearInterval(id);
-            }
-        }, interval)
-    });
+        }, increment)
+    }
 
-    ractive.on('new', function(evt){
+    function doStop(evt){
+       
+        // Clear interval
+        if (interval){
+            clearInterval(interval);
+        }
+
+        // Deactivate others
+        this.data.tasks.forEach(function(d){
+            d.active = false;
+        });
+    }
+
+    function doNew(evt){
         data.tasks.push({
             name : evt.node.value,
             remaining : pomodoro,
@@ -98,14 +126,14 @@
         })
 
         ractive.update();
-    });
+    }
 
-    ractive.on('clear', function(evt){
+    function doClear(evt){
         evt.node.value = "";
-    });
+    }
     
-    ractive.on('reset', function(evt){
+    function doReset(evt){
         this.data.tasks = [];
         this.update();
-    });
+    };
 })()
