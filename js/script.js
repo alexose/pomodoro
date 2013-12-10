@@ -13,7 +13,7 @@
                 seconds = total % 60,
                 minutes = (total - seconds) / 60;
 
-            return minutes + ':' + (seconds || "00");
+            return minutes + ':' + ("0" + seconds).slice(-2); // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
         },
         getWidth : function(ts){
             return (1 - (ts / pomodoro)) * 100;
