@@ -122,7 +122,7 @@
         data.tasks.push({
             name : evt.node.value,
             remaining : pomodoro,
-            date : +new Date(),
+            modified : +new Date(),
             active : false
         })
 
