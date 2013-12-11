@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Pomodoro.</title>
+        <title>Pomodoro!</title>
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/styles.css">
     </head>
@@ -16,9 +16,11 @@
             <div class="container">
                 <h1>
                     {{#active}}
+                    {{makeTitle(format(remaining) + ' - ' + name)}}
                     {{name}} - {{format(remaining)}}
                     {{/active}}
                     {{^active}}
+                    {{makeTitle('Pomodoro!')}}
                     Pomodoro
                     {{/active}}
                 </h1>

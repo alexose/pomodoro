@@ -43,6 +43,9 @@
         },
         getWidth : function(ts){
             return (1 - (ts / pomodoro)) * 100;
+        },
+        makeTitle : function(string){
+            document.title = string;
         }
     };
 
