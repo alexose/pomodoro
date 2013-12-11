@@ -1,7 +1,8 @@
 (function(){
     var pomodoro = 1000 * 60 * 25,
-        shortBreak = 1000 * 60 * 5,
-        longBreak = 1000 * 60 * 30;
+        shortBreak = 1000,// * 60 * 5,
+        longBreak = 2000,// * 60 * 30,
+        numBreaks = 3;
    
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
@@ -67,12 +68,13 @@
     });
     
     ractive.on('start', doStart);
+    ractive.on('break', doBreak);
     ractive.on('new'  , doNew);
     ractive.on('reset', doReset);
     ractive.on('clear', doClear);
     
     var interval;
-    function doStart(evt){
+    function doStart(evt, cb){
         var c = evt.context,
             increment = 1000 * 1, // Every one second
             ractive = this;
@@ -91,7 +93,12 @@
             
             if (c.remaining <= 0){
                 c.remaining = 0;
-                completed.call(ractive, evt);
+
+                if (typeof(cb) === 'function'){
+
+                } else {
+                    completed.call(ractive, evt);
+                }
             }
             
             ractive.update();
@@ -102,7 +109,36 @@
     function completed(evt){
         doStop.call(this, evt);
 
-        // Begin short brake automatically        
+        // Begin break automatically
+        doBreak.call(this, evt);
+    }
+
+    function doBreak(){
+        var instance = this.data.instance,
+            cb = function(){};
+
+        if (typeof(instance.breaks) === 'undefined'){
+            instance.breaks = 0;
+        }
+
+        if (instance.breaks && instance.breaks % numBreaks === 0){
+            doStart.call(this, {
+                context : {
+                    name : 'Long Break',
+                    remaining : longBreak
+                }
+            }, cb);
+        } else {
+            doStart.call(this, {
+                context : {
+                    name : 'Short Break',
+                    remaining : shortBreak
+                }
+            }, cb);
+        }
+
+        instance.breaks++;
+        this.update();
     }
 
     function doStop(evt){
