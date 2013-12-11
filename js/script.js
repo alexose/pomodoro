@@ -1,17 +1,11 @@
 (function(){
-    var pomodoro = 1000 * 60 * 25;
+    var pomodoro = 1000 * 60 * 25,
+        shortBreak = 1000 * 60 * 5,
+        longBreak = 1000 * 60 * 30;
    
-    /*
-    tasks : [
-        { name : 'Task one' , remaining : 0, date : 1386641200000, active : false },
-        { name : 'Task two' , remaining : pomodoro, date : 1386643229000, active : false }, 
-        { name : 'Task three' , remaining : pomodoro, date : 1386641219000, active : false },
-        { name : 'Task four' , remaining : 0, date : 1386641221000, active: false },
-    ],
-    */
-
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
+
     function load(){
         var result;
 
@@ -23,34 +17,33 @@
         } catch(e){
             console.log('Could not load data.  Starting from scratch.');
         }
-        return result || [];
+        return result || {};
     }
+
     function save(){
         try {
             if (localStorage && JSON){
-                var array = this.data.tasks.slice(0);
-                localStorage.setItem(namespace, JSON.stringify(array));
+                localStorage.setItem(namespace, JSON.stringify(this.data.instance));
             }
         } catch(e){
             console.log('Could not save data.'); 
         }
     }
 
-    var tasks = load(),
-        data = {
-            tasks : tasks,
-            format : function(ts){
-                var total = ts / 1000,
-                    seconds = total % 60,
-                    minutes = (total - seconds) / 60,
-                    formatted = minutes + ':' + ("0" + seconds).slice(-2);
-                    
-                return ts ? formatted : "Complete!"; // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
-            },
-            getWidth : function(ts){
-                return (1 - (ts / pomodoro)) * 100;
-            },
-        };
+    var data = {
+        instance : load(),
+        format : function(ts){
+            var total = ts / 1000,
+                seconds = total % 60,
+                minutes = (total - seconds) / 60,
+                formatted = minutes + ':' + ("0" + seconds).slice(-2);
+                
+            return ts ? formatted : "Complete!"; // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
+        },
+        getWidth : function(ts){
+            return (1 - (ts / pomodoro)) * 100;
+        }
+    };
 
     var app = Ractive.extend({
         update : function(){
@@ -66,6 +59,7 @@
     })
 
     // Find and trigger active tasks
+    var tasks = data.instance.tasks = data.instance.tasks || [];
     tasks.forEach(function(d){
         if (d.active){
             doStart.call(ractive, { context : d });
@@ -86,7 +80,7 @@
         doStop.call(this, evt);
 
         // Activate task in context
-        this.data.active = c;
+        this.data.instance.active = c;
         c.active = true;
 
         ractive.update();
@@ -97,12 +91,18 @@
             
             if (c.remaining <= 0){
                 c.remaining = 0;
-                doStop.call(ractive, evt);
+                completed.call(ractive, evt);
             }
             
             ractive.update();
             
         }, increment)
+    }
+
+    function completed(evt){
+        doStop.call(this, evt);
+
+        // Begin short brake automatically        
     }
 
     function doStop(evt){
@@ -113,13 +113,15 @@
         }
 
         // Deactivate others
-        this.data.tasks.forEach(function(d){
+        this.data.instance.tasks.forEach(function(d){
             d.active = false;
         });
+
+        this.data.instance.active = false;
     }
 
     function doNew(evt){
-        data.tasks.push({
+        data.instance.tasks.push({
             name : evt.node.value,
             remaining : pomodoro,
             modified : +new Date(),
@@ -134,7 +136,9 @@
     }
     
     function doReset(evt){
-        this.data.tasks = [];
+        doStop.call(ractive, evt);
+
+        this.data.instance = { tasks : [] };
         this.update();
     };
 })()

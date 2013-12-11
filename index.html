@@ -11,7 +11,7 @@
     </body>
 
     <!-- Templates -->
-    <script id='pomodoro' type='text/ractive'>
+    <script id='pomodoro' type='text/ractive'>{{#instance}}
         <div class="jumbotron">
             <div class="container">
                 <h1>
@@ -57,7 +57,8 @@
                 A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data.</a> 
             </footer>
         </div>
-    </script>
+
+    {{/instance}}</script>
     <script src="js/Ractive.js"></script> <!-- TOOO: switch to Ractive runtime -->
     <script src="js/Ractive-decorators-sortable.js"></script>
     <script src="js/script.js"></script>
