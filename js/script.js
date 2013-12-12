@@ -33,6 +33,11 @@
 
     var data = {
         instance : load(),
+        sounds : [
+            { name : 'sine1', display: 'Sine', selected : true },
+            { name : 'sine2', display: 'Alternative sine'},
+            { name : 'square', display: 'Square'}
+        ],
         format : function(ts){
             var total = ts / 1000,
                 seconds = total % 60,
@@ -69,7 +74,22 @@
             doStart.call(ractive, { context : d });
         }
     });
-    
+
+    var sound,
+        keypath = 'instance.currentSound';
+    ractive.observe(keypath, function(newvalue){
+        save.call(this);
+        
+        var file = this.get(keypath);
+        
+        if (!file){
+            file = this.data.sounds[0].name;
+            this.set('keypath', file);
+        }
+       
+        sound = new Audio('sounds/' + file + '.mp3');
+    });
+
     ractive.on('start', doStart);
     ractive.on('break', doBreak);
     ractive.on('new'  , doNew);
@@ -100,10 +120,12 @@
                 c.remaining = 0;
 
                 if (typeof(cb) === 'function'){
-
+                    cb();
                 } else {
                     completed.call(ractive, evt);
                 }
+                console.log(sound);
+                sound.play();
             }
             
             ractive.update();
