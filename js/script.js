@@ -1,7 +1,7 @@
 (function(){
     var pomodoro = 1000 * 60 * 25,
         shortBreak = 1000 * 60 * 5,
-        longBreak = 2000 * 60 * 30,
+        longBreak = 1000 * 60 * 30,
         numBreaks = 3;
    
     // Save and load methods for localStorage
