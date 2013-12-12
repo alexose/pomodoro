@@ -7,7 +7,7 @@ table.tasks tr {
 }
 
 table.tasks tr td {
-    border-bottom : 1px solid #eee;
+    border-bottom : 1px solid #f5f5f5;
 }
 
 table.tasks tr.add-new {
@@ -34,13 +34,17 @@ table.tasks tr td.action{
     opacity: 0;
     color: #ddd;
     padding-left: 10px;
+    border: none;
 }
+
 table.tasks tr:hover td.action {
     opacity: 1;
 }
+
 table.tasks tr:hover td.action-delete:hover {
     color: red;
 }
+
 table.tasks tr:hover td.action-finish:hover {
     color: #444;
 }
