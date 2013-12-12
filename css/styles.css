@@ -6,7 +6,7 @@ table.tasks tr {
     cursor: pointer;
 }
 
-table.tasks tr {
+table.tasks tr td {
     border-bottom : 1px solid #eee;
 }
 
@@ -28,6 +28,21 @@ table.tasks tr td.name span.active {
 
 table.tasks tr td div.progress{
     margin-bottom: 0;
+}
+
+table.tasks tr td.action{
+    opacity: 0;
+    color: #ddd;
+    padding-left: 10px;
+}
+table.tasks tr:hover td.action {
+    opacity: 1;
+}
+table.tasks tr:hover td.action-delete:hover {
+    color: red;
+}
+table.tasks tr:hover td.action-finish:hover {
+    color: #444;
 }
 
 table.tasks tr td input{

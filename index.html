@@ -42,6 +42,8 @@
                             <div class="progress-bar"  role="progressbar" aria-valuemax="100" style="width: {{getWidth(remaining)}}%"></div>
                         </div>
                     </td>
+                    <td on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></td>
+                    <td on-tap="finish" class="action action-finish glyphicon glyphicon-check"></td>
                 </tr>
                 {{/tasks}}
                 <tr class="add-new">

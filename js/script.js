@@ -1,7 +1,7 @@
 (function(){
     var pomodoro = 1000 * 60 * 25,
-        shortBreak = 1000,// * 60 * 5,
-        longBreak = 2000,// * 60 * 30,
+        shortBreak = 1000 * 60 * 5,
+        longBreak = 2000 * 60 * 30,
         numBreaks = 3;
    
     // Save and load methods for localStorage
@@ -75,6 +75,8 @@
     ractive.on('new'  , doNew);
     ractive.on('reset', doReset);
     ractive.on('clear', doClear);
+    ractive.on('delete', doDelete);
+    ractive.on('finish', doFinish);
     
     var interval;
     function doStart(evt, cb){
@@ -142,6 +144,22 @@
 
         instance.breaks++;
         this.update();
+    }
+
+    function doDelete(evt){
+        doStop.call(this);
+
+        // Remove ask from array
+        var index = evt.keypath.split('.').pop();
+        this.data.instance.tasks.splice(index, 1);
+
+        this.update();
+    }
+    
+    function doFinish(evt){
+        evt.context.remaining = 0;
+
+        completed.call(this);
     }
 
     function doStop(evt){
