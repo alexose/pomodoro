@@ -14,6 +14,12 @@
             if (localStorage && JSON){
                 var json = localStorage.getItem(namespace);
                 result = JSON.parse(json);
+
+                // Re-establish reference to active task
+                var i = result.activeIndex;
+                if (typeof(i) === 'number' && i >= 0){
+                    result.active = result.tasks[i];
+                }
             }
         } catch(e){
             console.log('Could not load data.  Starting from scratch.');
@@ -27,7 +33,7 @@
                 localStorage.setItem(namespace, JSON.stringify(this.data.instance));
             }
         } catch(e){
-            console.log('Could not save data.'); 
+            console.log('Could not save data.' + e); 
         }
     }
 
@@ -68,12 +74,11 @@
     })
 
     // Find and trigger active tasks
-    var tasks = data.instance.tasks = data.instance.tasks || [];
-    tasks.forEach(function(d){
-        if (d.active){
-            doStart.call(ractive, { context : d });
-        }
-    });
+    var start = data.instance.active;
+    if (start){
+        start.active = false;
+        doStart.call(ractive, { context : start });
+    }
 
     var sound,
         keypath = 'instance.currentSound';
@@ -115,6 +120,8 @@
 
         // Activate task in context
         this.data.instance.active = c;
+        this.data.instance.activeIndex = this.data.instance.tasks.indexOf(c);
+
         c.active = true;
 
         ractive.update();
@@ -204,6 +211,7 @@
         });
 
         this.data.instance.active = false;
+        this.data.instance.activeIndex = false;
     }
 
     function doNew(evt){
