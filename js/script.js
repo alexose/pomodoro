@@ -102,9 +102,16 @@
     function doStart(evt, cb){
         var c = evt.context,
             increment = 1000 * 1, // Every one second
+            active = c.active,
             ractive = this;
 
         doStop.call(this, evt);
+        
+        // If the selected task was the active one, we actually want to return.
+        if (active){
+            ractive.update();
+            return;
+        }
 
         // Activate task in context
         this.data.instance.active = c;
