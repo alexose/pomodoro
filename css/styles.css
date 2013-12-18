@@ -2,9 +2,15 @@
     margin-bottom: 0;
 }
 
+#header, #progress {
+    background-color: #eee;
+}
+
 #progress {
     height: 10px;
     border-radius: 0;
+    -webkit-box-shadow: none; 
+    box-shadow: none; 
 }
 
 table.tasks {
