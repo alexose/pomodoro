@@ -1,9 +1,9 @@
 (function(){
     var pomodoro = 1000 * 60 * 25,
-        shortBreak = 1000 * 60 * 5,
-        longBreak = 1000 * 60 * 30,
+        shortBreak = 1000, //, * 60 * 5,
+        longBreak = 2000, // * 60 * 30,
         numBreaks = 3;
-   
+
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
 
@@ -27,7 +27,10 @@
         return result || {};
     }
 
-    function save(){
+    function save(key, value){
+        key = key || '';
+        value = typeof(value) === 'undefined' ? this.data.instance : value;
+
         try {
             if (localStorage && JSON){
                 localStorage.setItem(namespace, JSON.stringify(this.data.instance));
@@ -60,9 +63,13 @@
         }
     };
 
+    // Ensure defaults
+    data.instance.options = data.instance.options || { currentSound : 'sine1' };
+
     var app = Ractive.extend({
         update : function(){
             save.call(this);
+            console.log(this);
             this._super();
         }
     });
@@ -80,8 +87,9 @@
         doStart.call(ractive, { context : start });
     }
 
+    // Observe options
     var sound,
-        keypath = 'instance.currentSound';
+        keypath = 'instance.options.currentSound';
     ractive.observe(keypath, function(newvalue){
         save.call(this);
         
@@ -129,16 +137,17 @@
         // Begin updating status bar
         interval = setInterval(function(){
             c.remaining -= increment;
-            
+           
+            // Finish task
             if (c.remaining <= 0){
                 c.remaining = 0;
+                clearInterval(interval);
 
                 if (typeof(cb) === 'function'){
                     cb();
                 } else {
                     completed.call(ractive, evt);
                 }
-                console.log(sound);
                 sound.play();
             }
             
@@ -150,8 +159,11 @@
     function completed(evt){
         doStop.call(this, evt);
 
-        // Begin break automatically
-        doBreak.call(this, evt);
+        if (this.data.instance.options.autobreak){
+
+            // Begin break automatically
+            doBreak.call(this, evt);
+        }
     }
 
     function doBreak(){
