@@ -12,7 +12,7 @@
 
     <!-- Templates -->
     <script id='pomodoro' type='text/ractive'>{{#instance}}
-        <div class="jumbotron">
+        <div id="header" class="jumbotron">
             <div class="container">
                 <h1>
                     {{#active}}
@@ -26,22 +26,22 @@
                 </h1>
             </div>
         </div>
+                
+        <div id="progress" class="progress {{ active ? 'progress-striped active' : '' }}">
+            <div class="progress-bar"  role="progressbar" aria-valuemax="100" style="width: {{getWidth(active.remaining)}}%"></div>
+        </div>
 
         <div class="container">
             <table class="tasks table">
                 {{#tasks}}
-                <tr decorator='sortable' on-tap="start">
+                <tr decorator='sortable' class="{{#active}}active{{/active}}" on-tap="start">
                     <td class="name">
                         <span>
                             {{#active}}&raquo; {{/active}}
                             {{name}}
                         </span>
                     </td>
-                    <td>
-                        <div class="progress {{ active ? 'progress-striped active' : '' }}">
-                            <div class="progress-bar"  role="progressbar" aria-valuemax="100" style="width: {{getWidth(remaining)}}%"></div>
-                        </div>
-                    </td>
+                    <td on-tap="pause" class="action action-pause glyphicon glyphicon-pause"></td>
                     <td on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></td>
                     <td on-tap="finish" class="action action-finish glyphicon glyphicon-check"></td>
                 </tr>
