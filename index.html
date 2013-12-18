@@ -34,9 +34,9 @@
         <div class="container">
             <table class="tasks table">
                 {{#tasks}}
-                <tr decorator='sortable' class="{{#active}}active{{/active}}" on-tap="start">
+                <tr decorator='sortable' class="{{active ? 'active' : ''}}" on-tap="start">
                     <td class="name">
-                        <span>
+                        <span class="{{remaining ? '' : 'finished'}}">
                             {{#active}}&raquo; {{/active}}
                             {{name}}
                         </span>

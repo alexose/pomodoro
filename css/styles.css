@@ -41,6 +41,10 @@ table.tasks tr td.name span {
 table.tasks tr td.name span.active {
 }
 
+table.tasks tr td.name span.finished{
+    text-decoration: line-through;
+}
+
 table.tasks tr td.action{
     opacity: 0;
     color: #ddd;
