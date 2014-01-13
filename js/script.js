@@ -69,7 +69,6 @@
     var app = Ractive.extend({
         update : function(){
             save.call(this);
-            console.log(this);
             this._super();
         }
     });
