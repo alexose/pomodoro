@@ -47,6 +47,25 @@
             { name : 'sine2', display: 'Alternative sine'},
             { name : 'square', display: 'Square'}
         ],
+        process : function(tasks){
+            var arr = [],
+                now = +new Date(),
+                last = 0,
+                day = 1000 * 60 * 60 * 24;
+
+            tasks.forEach(function(d, i){
+                var diff = now - d.modified;
+
+                if (diff > last * day){
+                    last = Math.ceil(diff / day);
+                    arr.push({ divider : true });
+                }
+
+                arr.push(d);
+            });
+
+            return arr;
+        },
         format : function(ts){
             var total = ts / 1000,
                 seconds = total % 60,

@@ -43,7 +43,11 @@
 
         <div class="container">
             <table class="tasks table">
-                {{#tasks}}
+                {{#(process(tasks))}}
+                {{#divider}}
+                <hr />
+                {{/divider}}
+                {{^divider}}
                 <tr decorator='sortable' class="{{active ? 'active' : ''}}" on-tap="start">
                     <td class="name">
                         <span class="{{remaining ? '' : 'finished'}}">
@@ -55,7 +59,8 @@
                     <td on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></td>
                     <td on-tap="finish" class="action action-finish glyphicon glyphicon-check"></td>
                 </tr>
-                {{/tasks}}
+                {{/divider}}
+                {{/process}}
                 <tr class="add-new">
                     <td>
                         <input on-enter='new' on-blur="clear" placeholder='Add a new task' />
