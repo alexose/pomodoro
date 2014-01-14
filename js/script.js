@@ -58,7 +58,7 @@
 
                 if (diff > last * day){
                     last = Math.ceil(diff / day);
-                    arr.push({ divider : true });
+                    arr.push({ divider : last + ' days ago'});
                 }
 
                 arr.push(d);

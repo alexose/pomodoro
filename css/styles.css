@@ -29,6 +29,10 @@ table.tasks tr.add-new {
     cursor: default;
 }
 
+table.tasks tr.divider {
+    text-align: center;
+}
+
 table.tasks tr td.name {
     width: 100%;
 }

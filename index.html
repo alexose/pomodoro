@@ -45,7 +45,7 @@
             <table class="tasks table">
                 {{#(process(tasks))}}
                 {{#divider}}
-                <hr />
+                <tr class="divider">{{divider}}</tr>
                 {{/divider}}
                 {{^divider}}
                 <tr decorator='sortable' class="{{active ? 'active' : ''}}" on-tap="start">
