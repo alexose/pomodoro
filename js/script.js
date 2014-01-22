@@ -15,6 +15,11 @@
                 var json = localStorage.getItem(namespace);
                 result = JSON.parse(json);
 
+                // Ensure index
+                if (!result.tasks){
+                    result.tasks = [];
+                }
+
                 // Re-establish reference to active task
                 var i = result.activeIndex;
                 if (typeof(i) === 'number' && i >= 0){
