@@ -33,6 +33,7 @@
     }
 
     function save(key, value){
+
         key = key || '';
         value = typeof(value) === 'undefined' ? this.data.instance : value;
 
@@ -52,25 +53,6 @@
             { name : 'sine2', display: 'Alternative sine'},
             { name : 'square', display: 'Square'}
         ],
-        process : function(tasks){
-            var arr = [],
-                now = +new Date(),
-                last = 0,
-                day = 1000 * 60 * 60 * 24;
-
-            tasks.forEach(function(d, i){
-                var diff = now - d.modified;
-
-                if (diff > last * day){
-                    last = Math.ceil(diff / day);
-                    arr.push({ divider : last + ' days ago'});
-                }
-
-                arr.push(d);
-            });
-
-            return arr;
-        },
         format : function(ts){
             var total = ts / 1000,
                 seconds = total % 60,
@@ -90,14 +72,7 @@
     // Ensure defaults
     data.instance.options = data.instance.options || { currentSound : 'sine1' };
 
-    var app = Ractive.extend({
-        update : function(){
-            save.call(this);
-            this._super();
-        }
-    });
-
-    var ractive = new app({
+    var ractive = new Ractive({
         el : 'application',
         template : '#pomodoro',
         data : data
@@ -177,6 +152,8 @@
             ractive.update();
             
         }, increment)
+       
+        save.call(this);
     }
 
     function completed(evt){
@@ -215,6 +192,7 @@
 
         instance.breaks++;
         this.update();
+        save.call(this);
     }
 
     function doDelete(evt){
@@ -225,6 +203,7 @@
         this.data.instance.tasks.splice(index, 1);
 
         this.update();
+        save.call(this);
     }
     
     function doFinish(evt){
@@ -258,6 +237,7 @@
         })
 
         ractive.update();
+        save.call(this);
     }
 
     function doClear(evt){
@@ -269,5 +249,6 @@
 
         this.data.instance = { tasks : [] };
         this.update();
+        save.call(this);
     };
 })()
