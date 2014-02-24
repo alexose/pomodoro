@@ -29,7 +29,7 @@ table.tasks tr.add-new {
     cursor: default;
 }
 
-table.tasks tr.divider {
+table.tasks tr td span.divider {
     text-align: center;
 }
 

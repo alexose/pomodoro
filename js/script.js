@@ -37,6 +37,8 @@
         key = key || '';
         value = typeof(value) === 'undefined' ? this.data.instance : value;
 
+        addDividers.call(this);
+
         try {
             if (localStorage && JSON){
                 localStorage.setItem(namespace, JSON.stringify(this.data.instance));
@@ -44,6 +46,51 @@
         } catch(e){
             console.log('Could not save data.' + e); 
         }
+    }
+
+    // Add date dividers
+    function addDividers(){
+
+        var instance = this.data.instance,
+            tasks = instance.tasks,
+            dividers = instance.dividers || {};
+            output = [];
+
+        var today = new Date().getDate(),
+            last = 0;
+
+        for (var i in tasks){
+
+            var task = tasks[i],
+                date = new Date(task.modified);
+
+            date.setHours(0,0,0,0);
+
+            // See if task is +1 days ago
+            var daysAgo = today - date.getDate();
+
+            if (daysAgo > last){
+                
+                // Does this day not have a divider yet?  Insert one
+                if (!dividers[+date]){
+
+                    var divider = {
+                        divider : true,
+                        name : daysAgo + ' days ago'
+                    }
+
+                    dividers[+date] = divider;
+                    output.push(divider);
+                }
+
+                last = daysAgo;    
+            }
+        
+            output.push(task);
+        }
+
+        instance.tasks = output;
+        instance.dividers = dividers; 
     }
 
     var data = {
@@ -232,7 +279,7 @@
         data.instance.tasks.push({
             name : evt.node.value,
             remaining : pomodoro,
-            modified : +new Date(),
+            modified: +new Date(),
             active : false
         })
 

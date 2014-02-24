@@ -44,6 +44,12 @@
         <div class="container">
             <table class="tasks table">
                 {{#tasks}}
+                {{#divider}}
+                <tr decorator='sortable'>
+                    <td class="name"><span class="divider">{{name}}</span></td>
+                </tr>
+                {{/divider}}
+                {{^divider}}
                 <tr decorator='sortable' class="{{active ? 'active' : ''}}" on-tap="start">
                     <td class="name">
                         <span class="{{remaining ? '' : 'finished'}}">
@@ -55,6 +61,7 @@
                     <td on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></td>
                     <td on-tap="finish" class="action action-finish glyphicon glyphicon-check"></td>
                 </tr>
+                {{/divider}}
                 {{/tasks}}
                 <tr class="add-new">
                     <td>
