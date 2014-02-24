@@ -44,15 +44,9 @@
         <div class="container">
             <table class="tasks table">
                 {{#tasks}}
-                {{#divider}}
-                <tr decorator='sortable'>
-                    <td class="name"><span class="divider">{{name}}</span></td>
-                </tr>
-                {{/divider}}
-                {{^divider}}
-                <tr decorator='sortable' class="{{active ? 'active' : ''}}" on-tap="start">
+                <tr decorator='sortable' class="{{active ? 'active ' : ''}}{{(process(.)) ? 'divider ': ''}}" on-tap="start">
                     <td class="name">
-                        <span class="{{remaining ? '' : 'finished'}}">
+                        <span class="{{remaining || divider ? '' : 'finished'}}">
                             {{#active}}&raquo; {{/active}}
                             {{name}}
                         </span>
@@ -61,7 +55,6 @@
                     <td on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></td>
                     <td on-tap="finish" class="action action-finish glyphicon glyphicon-check"></td>
                 </tr>
-                {{/divider}}
                 {{/tasks}}
                 <tr class="add-new">
                     <td>
@@ -100,7 +93,7 @@
 
     {{/instance}}</script>
     <script src="js/Ractive.min.js"></script> <!-- TOOO: switch to Ractive runtime -->
-    <script src="js/Ractive-decorators-sortable.min.js"></script>
+    <script src="js/Ractive-decorators-sortable.js"></script>
     <script src="js/Ractive-events-tap.min.js"></script>
     <script src="js/script.js"></script>
 </html>

@@ -1,6 +1,6 @@
 (function(){
     var pomodoro = 1000 * 60 * 25,
-        shortBreak = 1000, //, * 60 * 5,
+        shortBreak = 1001, //, * 60 * 5,
         longBreak = 2000, // * 60 * 30,
         numBreaks = 3;
 
@@ -100,6 +100,10 @@
             { name : 'sine2', display: 'Alternative sine'},
             { name : 'square', display: 'Square'}
         ],
+        process: function(task){
+            console.log(task);
+            return task.divider;
+        },
         format : function(ts){
             var total = ts / 1000,
                 seconds = total % 60,
