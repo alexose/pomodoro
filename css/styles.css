@@ -29,8 +29,16 @@ table.tasks tr.add-new {
     cursor: default;
 }
 
-table.tasks .divider {
+table.tasks tr.divider {
     text-align: center;
+}
+
+table.tasks tr.divider td.action{
+    visibility: hidden;
+}
+
+table.tasks tr.divider td.action.action-delete{
+    visibility: visible;
 }
 
 table.tasks tr td.name {

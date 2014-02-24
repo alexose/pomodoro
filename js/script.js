@@ -101,7 +101,6 @@
             { name : 'square', display: 'Square'}
         ],
         process: function(task){
-            console.log(task);
             return task.divider;
         },
         format : function(ts){
