@@ -279,12 +279,25 @@
     }
 
     function doNew(evt){
-        data.instance.tasks.push({
+
+        var task = {
             name : evt.node.value,
             remaining : pomodoro,
             modified: +new Date(),
             active : false
-        })
+        };
+
+        // Insert into array above the first date maker
+        var tasks = data.instance.tasks,
+            pos = tasks.length - 1;
+
+        for (var i in tasks){
+            if (tasks[i].divider){
+                pos = i;
+                break;
+            }
+        }
+        tasks.splice(pos, 0, task);
 
         ractive.update();
         save.call(this);
