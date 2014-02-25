@@ -32,10 +32,7 @@
         return result || {};
     }
 
-    function save(key, value){
-
-        key = key || '';
-        value = typeof(value) === 'undefined' ? this.data.instance : value;
+    function save(){
 
         addDividers.call(this);
 
@@ -122,11 +119,22 @@
     // Ensure defaults
     data.instance.options = data.instance.options || { currentSound : 'sine1' };
 
-    var ractive = new Ractive({
+    var extended = Ractive.extend({
+        update : function(skip){
+
+            // TODO: Save remaining time without having to re-encode JSON
+            // if (!skip){
+                save.call(this);
+            // }
+            this._super();
+        }
+    });
+
+    var ractive = new extended({
         el : 'application',
         template : '#pomodoro',
         data : data
-    })
+    });
 
     // Find and trigger active tasks
     var start = data.instance.active;
@@ -139,7 +147,6 @@
     var sound,
         keypath = 'instance.options.currentSound';
     ractive.observe(keypath, function(newvalue){
-        save.call(this);
         
         var file = this.get(keypath);
         
@@ -199,11 +206,10 @@
                 sound.play();
             }
             
-            ractive.update();
+            ractive.update.call(ractive, true);
             
         }, increment)
        
-        save.call(this);
     }
 
     function completed(evt){
@@ -242,7 +248,6 @@
 
         instance.breaks++;
         this.update();
-        save.call(this);
     }
 
     function doDelete(evt){
@@ -253,7 +258,6 @@
         this.data.instance.tasks.splice(index, 1);
 
         this.update();
-        save.call(this);
     }
     
     function doFinish(evt){
@@ -300,7 +304,6 @@
         tasks.splice(pos, 0, task);
 
         ractive.update();
-        save.call(this);
     }
 
     function doClear(evt){
@@ -312,6 +315,5 @@
 
         this.data.instance = { tasks : [] };
         this.update();
-        save.call(this);
     };
 })()
