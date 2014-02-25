@@ -64,26 +64,6 @@
                 </tr>
             </table>
 
-            <h2>Options</h2>
-            {{#options}}
-            <select value="{{currentSound}}">
-                {{#sounds}}
-                <option value="{{name}}">{{display}}</option>
-                {{/sounds}}
-            </select>
-            <br />
-            <label>
-                <input checked="{{autobreak}}" type="checkbox">Take breaks automatically
-            </label>
-            <br />
-            {{#autobreak}}
-            <label>
-                <input checked="{{autostart}}" type="checkbox">Start next task automatically
-            </label>
-            {{/autobreak}}
-            {{/options}}
-        </div>
-
         <div class="container">
             <hr />
             <footer>

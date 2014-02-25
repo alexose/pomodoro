@@ -175,8 +175,8 @@
 
         doStop.call(this, evt);
         
-        // If the selected task was the active one, we actually want to return.
-        if (active){
+        // If the selected task was the active one, return.
+        if (active || c.divider){
             ractive.update();
             return;
         }
