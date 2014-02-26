@@ -34,7 +34,7 @@
 
     function save(){
 
-        addDividers.call(this);
+        dividers.call(this);
 
         try {
             if (localStorage && JSON){
@@ -45,8 +45,8 @@
         }
     }
 
-    // Add date dividers
-    function addDividers(){
+    // Update date dividers
+    function dividers(){
 
         var instance = this.data.instance,
             tasks = instance.tasks,
@@ -73,11 +73,13 @@
 
                     var divider = {
                         divider : true,
-                        name : daysAgo + ' days ago'
+                        name : name(daysAgo)
                     }
 
                     dividers[+date] = divider;
                     output.push(divider);
+                } else {
+                    dividers[+date].name = name(daysAgo); 
                 }
 
                 last = daysAgo;    
@@ -87,7 +89,11 @@
         }
 
         instance.tasks = output;
-        instance.dividers = dividers; 
+        instance.dividers = dividers;
+
+        function name(days){
+            return days > 1 ? days + ' days ago' : '1 day ago';
+        }
     }
 
     var data = {
@@ -135,6 +141,19 @@
         template : '#pomodoro',
         data : data
     });
+    
+    // Update dividers on day change
+    var tomorrow = new Date();
+    tomorrow.setHours(0,0,0,0);
+    (function setTimer(){
+        tomorrow.setDate(+1);
+    
+        setTimeout(function(){
+            dividers.bind(ractive);
+            setTimer();
+        }, tomorrow);
+    })()
+    dividers.call(ractive);
 
     // Find and trigger active tasks
     var start = data.instance.active;
@@ -276,6 +295,7 @@
         // Deactivate others
         this.data.instance.tasks.forEach(function(d){
             d.active = false;
+            d.remaining = pomodoro;
         });
 
         this.data.instance.active = false;
