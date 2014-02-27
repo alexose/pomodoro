@@ -117,8 +117,8 @@
         getWidth : function(ts){
             return (1 - (ts / pomodoro)) * 100;
         },
-        makeTitle : function(string){
-            document.title = string;
+        makeTitle : function(string, name){
+            document.title = name ? string + " - " + name : "Pomodoro!";
         }
     };
 
@@ -232,7 +232,7 @@
     }
 
     function completed(evt){
-        doStop.call(this, evt);
+        doStop.call(this, evt, true);
 
         if (this.data.instance.options.autobreak){
 
@@ -285,21 +285,28 @@
         completed.call(this);
     }
 
-    function doStop(evt){
-       
+    function doStop(evt, force){
+      
+        var instance = this.data.instance;
+
         // Clear interval
         if (interval){
             clearInterval(interval);
         }
 
         // Deactivate others
-        this.data.instance.tasks.forEach(function(d){
+        instance.tasks.forEach(function(d){
             d.active = false;
-            d.remaining = pomodoro;
         });
 
-        this.data.instance.active = false;
-        this.data.instance.activeIndex = false;
+        if (instance.active){
+            if (!force){
+                instance.active.remaining = pomodoro;
+            }
+            instance.active = false;
+            instance.activeIndex = false;
+        }
+
     }
 
     function doNew(evt){
