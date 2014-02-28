@@ -50,7 +50,7 @@
 
         var instance = this.data.instance,
             tasks = instance.tasks,
-            dividers = instance.dividers || {};
+            index = instance.dividers || {};
             output = [];
 
         var today = new Date().getDate(),
@@ -69,17 +69,17 @@
             if (daysAgo > last){
 
                 // Does this day not have a divider yet?  Insert one
-                if (!dividers[+date]){
+                if (!index[+date]){
 
                     var divider = {
                         divider : true,
                         name : name(daysAgo)
-                    }
+                    };
 
-                    dividers[+date] = divider;
+                    index[+date] = divider;
                     output.push(divider);
                 } else {
-                    dividers[+date].name = name(daysAgo);
+                    index[+date].name = name(daysAgo);
                 }
 
                 last = daysAgo;
@@ -152,7 +152,7 @@
             dividers.bind(ractive);
             setTimer();
         }, tomorrow);
-    })()
+    })();
     dividers.call(ractive);
 
     // Find and trigger active tasks
@@ -232,7 +232,7 @@
 
             ractive.update.call(ractive, true);
 
-        }, increment)
+        }, increment);
 
     }
 
@@ -347,5 +347,5 @@
 
         this.data.instance = { tasks : [] };
         this.update();
-    };
-})()
+    }
+})();
