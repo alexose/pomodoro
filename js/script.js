@@ -41,7 +41,7 @@
                 localStorage.setItem(namespace, JSON.stringify(this.data.instance));
             }
         } catch(e){
-            console.log('Could not save data.' + e); 
+            console.log('Could not save data.' + e);
         }
     }
 
@@ -67,7 +67,7 @@
             var daysAgo = today - date.getDate();
 
             if (daysAgo > last){
-                
+
                 // Does this day not have a divider yet?  Insert one
                 if (!dividers[+date]){
 
@@ -79,12 +79,12 @@
                     dividers[+date] = divider;
                     output.push(divider);
                 } else {
-                    dividers[+date].name = name(daysAgo); 
+                    dividers[+date].name = name(daysAgo);
                 }
 
-                last = daysAgo;    
+                last = daysAgo;
             }
-        
+
             output.push(task);
         }
 
@@ -111,7 +111,7 @@
                 seconds = total % 60,
                 minutes = (total - seconds) / 60,
                 formatted = minutes + ':' + ("0" + seconds).slice(-2);
-                
+
             return ts ? formatted : "Complete!"; // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
         },
         getWidth : function(ts){
@@ -141,13 +141,13 @@
         template : '#pomodoro',
         data : data
     });
-    
+
     // Update dividers on day change
     var tomorrow = new Date();
     tomorrow.setHours(0,0,0,0);
     (function setTimer(){
         tomorrow.setDate(+1);
-    
+
         setTimeout(function(){
             dividers.bind(ractive);
             setTimer();
@@ -166,14 +166,14 @@
     var sound,
         keypath = 'instance.options.currentSound';
     ractive.observe(keypath, function(newvalue){
-        
+
         var file = this.get(keypath);
-        
+
         if (!file){
             file = this.data.sounds[0].name;
             this.set('keypath', file);
         }
-       
+
         sound = new Audio('sounds/' + file + '.mp3');
     });
 
@@ -184,7 +184,7 @@
     ractive.on('clear', doClear);
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
-    
+
     var interval;
     function doStart(evt, cb){
         var c = evt.context,
@@ -192,10 +192,15 @@
             active = c.active,
             ractive = this;
 
+        if (!c.remaining){
+            // TODO: Allow rename
+            return;
+        }
+
         doStop.call(this, evt);
-        
+
         // If the selected task was the active one, return.
-        if (active || c.divider){
+        if (active){
             ractive.update();
             return;
         }
@@ -211,7 +216,7 @@
         // Begin updating status bar
         interval = setInterval(function(){
             c.remaining -= increment;
-           
+
             // Finish task
             if (c.remaining <= 0){
                 c.remaining = 0;
@@ -224,11 +229,11 @@
                 }
                 sound.play();
             }
-            
+
             ractive.update.call(ractive, true);
-            
+
         }, increment)
-       
+
     }
 
     function completed(evt){
@@ -278,7 +283,7 @@
 
         this.update();
     }
-    
+
     function doFinish(evt){
         evt.context.remaining = 0;
 
@@ -286,7 +291,7 @@
     }
 
     function doStop(evt, force){
-      
+
         var instance = this.data.instance;
 
         // Clear interval
@@ -336,7 +341,7 @@
     function doClear(evt){
         evt.node.value = "";
     }
-    
+
     function doReset(evt){
         doStop.call(ractive, evt);
 
