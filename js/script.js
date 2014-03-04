@@ -2,7 +2,8 @@
     var pomodoro = 1000 * 60 * 25,
         shortBreak = 1001, //, * 60 * 5,
         longBreak = 2000, // * 60 * 30,
-        numBreaks = 3;
+        numBreaks = 3,
+        day = 1000 * 60 * 60 * 24;
 
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
@@ -53,7 +54,7 @@
             index = instance.dividers || {};
             output = [];
 
-        var today = new Date().getDate(),
+        var now = +new Date(),
             last = 0;
 
         for (var i in tasks){
@@ -64,7 +65,7 @@
             date.setHours(0,0,0,0);
 
             // See if task is +1 days ago
-            var daysAgo = today - date.getDate();
+            var daysAgo = Math.floor((now - date) / day);
 
             if (daysAgo > last){
 
