@@ -36,7 +36,7 @@
                 </h1>
             </div>
         </div>
-                
+
         <div id="progress" class="progress {{ active ? 'progress-striped active' : '' }}">
             <div class="progress-bar"  role="progressbar" aria-valuemax="100" style="width: {{getWidth(active.remaining)}}%"></div>
         </div>
@@ -44,9 +44,9 @@
         <div class="container">
             <table class="tasks table">
                 {{#tasks}}
-                <tr decorator='sortable' class="{{active ? 'active ' : ''}}{{(process(.)) ? 'divider ': ''}}" on-tap="start">
+                <tr decorator='sortable' class="{{active ? 'active ' : ''}}" on-tap="start">
                     <td class="name">
-                        <span class="{{remaining || divider ? '' : 'finished'}}">
+                        <span class="{{remaining ? '' : 'finished'}}">
                             {{#active}}&raquo; {{/active}}
                             {{name}}
                         </span>
@@ -67,7 +67,7 @@
         <div class="container">
             <hr />
             <footer>
-                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data.</a> 
+                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data.</a>
             </footer>
         </div>
 

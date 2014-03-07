@@ -35,65 +35,12 @@
 
     function save(){
 
-        dividers.call(this);
-
         try {
             if (localStorage && JSON){
                 localStorage.setItem(namespace, JSON.stringify(this.data.instance));
             }
         } catch(e){
             console.log('Could not save data.' + e);
-        }
-    }
-
-    // Update date dividers
-    function dividers(){
-
-        var instance = this.data.instance,
-            tasks = instance.tasks,
-            index = instance.dividers || {};
-            output = [];
-
-        var now = +new Date(),
-            last = 0;
-
-        for (var i in tasks){
-
-            var task = tasks[i],
-                date = new Date(task.modified);
-
-            date.setHours(0,0,0,0);
-
-            // See if task is +1 days ago
-            var daysAgo = Math.floor((now - date) / day);
-
-            if (daysAgo > last){
-
-                // Does this day not have a divider yet?  Insert one
-                if (!index[+date]){
-
-                    var divider = {
-                        divider : true,
-                        name : name(daysAgo)
-                    };
-
-                    index[+date] = divider;
-                    output.push(divider);
-                } else {
-                    index[+date].name = name(daysAgo);
-                }
-
-                last = daysAgo;
-            }
-
-            output.push(task);
-        }
-
-        instance.tasks = output;
-        instance.dividers = dividers;
-
-        function name(days){
-            return days > 1 ? days + ' days ago' : '1 day ago';
         }
     }
 
@@ -104,9 +51,6 @@
             { name : 'sine2', display: 'Alternative sine'},
             { name : 'square', display: 'Square'}
         ],
-        process: function(task){
-            return task.divider;
-        },
         format : function(ts){
             var total = ts / 1000,
                 seconds = total % 60,
@@ -142,19 +86,6 @@
         template : '#pomodoro',
         data : data
     });
-
-    // Update dividers on day change
-    var tomorrow = new Date();
-    tomorrow.setHours(0,0,0,0);
-    (function setTimer(){
-        tomorrow.setDate(+1);
-
-        setTimeout(function(){
-            dividers.bind(ractive);
-            setTimer();
-        }, tomorrow);
-    })();
-    dividers.call(ractive);
 
     // Find and trigger active tasks
     var start = data.instance.active;
@@ -328,12 +259,6 @@
         var tasks = data.instance.tasks,
             pos = tasks.length - 1;
 
-        for (var i in tasks){
-            if (tasks[i].divider){
-                pos = i;
-                break;
-            }
-        }
         tasks.splice(pos, 0, task);
 
         ractive.update();
