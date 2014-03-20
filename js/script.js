@@ -1,9 +1,9 @@
 (function(){
-    var pomodoro = 1000 * 60 * 25,
-        shortBreak = 1001, //, * 60 * 5,
-        longBreak = 2000, // * 60 * 30,
-        numBreaks = 3,
-        day = 1000 * 60 * 60 * 24;
+    var pomodoro   = 1000 * 60 * 25,
+        shortBreak = 1000 * 60 * 5,
+        longBreak  = 1000 * 60 * 30,
+        numBreaks  = 3,
+        day        = 1000 * 60 * 60 * 24;
 
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
@@ -111,6 +111,8 @@
 
     ractive.on('start', doStart);
     ractive.on('break', doBreak);
+    ractive.on('shortBreak', doShortBreak);
+    ractive.on('longBreak', doLongBreak);
     ractive.on('new'  , doNew);
     ractive.on('reset', doReset);
     ractive.on('clear', doClear);
@@ -179,7 +181,7 @@
         }
     }
 
-    function doBreak(){
+    function doBreak(type){
         var instance = this.data.instance,
             cb = function(){};
 
@@ -187,24 +189,32 @@
             instance.breaks = 0;
         }
 
-        if (instance.breaks && instance.breaks % numBreaks === 0){
-            doStart.call(this, {
-                context : {
-                    name : 'Long Break',
-                    remaining : longBreak
-                }
-            }, cb);
-        } else {
-            doStart.call(this, {
-                context : {
-                    name : 'Short Break',
-                    remaining : shortBreak
-                }
-            }, cb);
+
+        if (!type){
+          type = instance.breaks && (instance.breaks % numBreaks === 0) ? "long" : "short";
         }
+
+        var name = type == "long" ? "Long Break" : "Short Break";
+
+        var obj = {
+            context : {
+                    name : name,
+                    remaining : type == "long" ? longBreak : shortBreak
+                }
+            };
+
+        doStart.call(this, obj);
 
         instance.breaks++;
         this.update();
+    }
+
+    function doShortBreak(){
+        doBreak.call(this, "short");
+    }
+
+    function doLongBreak(){
+        doBreak.call(this, "long");
     }
 
     function doDelete(evt){
