@@ -114,6 +114,7 @@
     ractive.on('new'  , doNew);
     ractive.on('reset', doReset);
     ractive.on('clear', doClear);
+    ractive.on('clearCompleted', doClearCompleted);
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
 
@@ -266,6 +267,18 @@
 
     function doClear(evt){
         evt.node.value = "";
+    }
+
+    function doClearCompleted(evt){
+
+        this.data.instance.tasks = this.data.instance.tasks.filter(strip);
+        this.update();
+
+        return;
+
+        function strip(task){
+            return task.remaining === 0 ? false : true;
+        }
     }
 
     function doReset(evt){
