@@ -218,9 +218,12 @@
     }
 
     function doFinish(evt){
+
         evt.context.remaining = 0;
 
         completed.call(this);
+
+        this.update();
     }
 
     function doStop(evt, force){
