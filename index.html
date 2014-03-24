@@ -65,6 +65,10 @@
             </table>
 
         <div class="container">
+            Showing {{tasks.length}} pomodoros, for a total of {{makeTime(tasks.length)}} worth of work.
+        </div>
+
+        <div class="container">
             <button class="btn btn-primary" on-tap="shortBreak">Short Break</button>
             <button class="btn btn-primary" on-tap="longBreak">Long Break</button>
         </div>

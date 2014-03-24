@@ -64,6 +64,13 @@
         },
         makeTitle : function(string, name){
             document.title = name ? string + " - " + name : "Pomodoro!";
+        },
+        makeTime : function(pomodoros){
+            var total = pomodoros * (pomodoro / 60 / 1000),
+                hours = Math.floor(total/60),
+                mins  = total % 60;
+
+            return hours + " hours and " + mins + " minutes";
         }
     };
 
@@ -269,11 +276,7 @@
             active : false
         };
 
-        // Insert into array above the first date maker
-        var tasks = data.instance.tasks,
-            pos = tasks.length - 1;
-
-        tasks.splice(pos, 0, task);
+        data.instance.tasks.push(task);
 
         ractive.update();
     }
