@@ -65,6 +65,14 @@
         makeTitle : function(string, name){
             document.title = name ? string + " - " + name : "Pomodoro!";
         },
+        makeRemaining : function(tasks){
+            var remaining = tasks.filter(function(d){ return d.remaining; }),
+                total = remaining.length * pomodoro;
+
+            var endDate = new Date(+new Date() + total);
+
+            return endDate.getHours() + ":" + (endDate.getMinutes()<10?'0':'') + endDate.getMinutes();
+        },
         makeTime : function(tasks){
             var remaining = tasks.filter(function(d){ return d.remaining; });
 
