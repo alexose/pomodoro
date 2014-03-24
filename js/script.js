@@ -65,12 +65,27 @@
         makeTitle : function(string, name){
             document.title = name ? string + " - " + name : "Pomodoro!";
         },
-        makeTime : function(pomodoros){
-            var total = pomodoros * (pomodoro / 60 / 1000),
-                hours = Math.floor(total/60),
-                mins  = total % 60;
+        makeTime : function(tasks){
+            var remaining = tasks.filter(function(d){ return d.remaining; });
 
-            return hours + " hours and " + mins + " minutes";
+            var total = remaining.length * (pomodoro / 60 / 1000),
+                hours = Math.floor(total/60),
+                mins  = total % 60,
+                string = "";
+
+            if (hours){
+                string += hours + " " + (hours > 1 ? "hours" : "hour");
+
+                if (mins){
+                    string += " and ";
+                }
+            }
+
+            if (mins){
+                string += mins + " " + (mins > 1 ? "minutes" : "minute");
+            }
+
+            return string;
         }
     };
 

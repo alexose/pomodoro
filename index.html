@@ -64,8 +64,10 @@
                 </tr>
             </table>
 
-        <div class="container">
-            Showing {{tasks.length}} pomodoros, for a total of {{makeTime(tasks.length)}} worth of work.
+            <div class="container">
+              {{#tasks.length}}
+              Showing {{tasks.length}} Pomodoro{{(tasks.length > 1 ? "s" : "")}} with {{makeTime(tasks)}} of work remaining.
+              {{/tasks.length}}
         </div>
 
         <div class="container">
