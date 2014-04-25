@@ -30,7 +30,7 @@
         } catch(e){
             console.log('Could not load data.  Starting from scratch.');
         }
-        return result || {};
+        return result || { tasks : [] };
     }
 
     function save(){
