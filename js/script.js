@@ -150,7 +150,9 @@
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
 
-    var interval;
+    var interval,
+        before = new Date();
+
     function doStart(evt, cb){
         var c = evt.context,
             increment = 1000 * 1, // Every one second
@@ -180,7 +182,11 @@
 
         // Begin updating status bar
         interval = setInterval(function(){
-            c.remaining -= increment;
+
+            var elapsed = (new Date()).getTime() - before.getTime();
+
+            c.remaining -= elapsed;
+            before = new Date();
 
             // Finish task
             if (c.remaining <= 0){
