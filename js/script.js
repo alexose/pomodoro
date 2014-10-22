@@ -52,12 +52,19 @@
             { name : 'square', display: 'Square'}
         ],
         format : function(ts){
-            var total = ts / 1000,
-                seconds = total % 60,
-                minutes = (total - seconds) / 60,
-                formatted = minutes + ':' + ("0" + seconds).slice(-2);
+            ts = ts / 1000;
 
-            return ts ? formatted : "Complete!"; // via http://stackoverflow.com/questions/8043026/javascript-format-number-to-have-2-digit
+            var hours   = Math.floor(ts / 3600),
+                minutes = Math.floor((ts - (hours * 3600)) / 60),
+                seconds = Math.round(ts - (hours * 3600) - (minutes * 60));
+
+            if (hours   < 10) { hours   = "0" + hours; }
+            if (minutes < 10) { minutes = "0" + minutes; }
+            if (seconds < 10) { seconds = "0" + seconds; }
+
+            var time = minutes + ':' + seconds;
+
+            return ts ? time : "Complete!"; // via http://stackoverflow.com/questions/6312993
         },
         getWidth : function(ts){
             return (1 - (ts / pomodoro)) * 100;
