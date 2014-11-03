@@ -134,6 +134,7 @@
     // Observe options
     var sound,
         keypath = 'instance.options.currentSound';
+
     ractive.observe(keypath, function(newvalue){
 
         var file = this.get(keypath);
@@ -157,14 +158,14 @@
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
 
-    var interval,
-        before = new Date();
+    var interval;
 
     function doStart(evt, cb){
         var c = evt.context,
             increment = 1000 * 1, // Every one second
             active = c.active,
-            ractive = this;
+            ractive = this,
+            before = new Date();
 
         if (!c.remaining){
             // TODO: Allow rename
