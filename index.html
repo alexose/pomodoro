@@ -65,12 +65,14 @@
             </table>
 
             {{#tasks.length}}
-            <div class="container" title="If you start now, you'll be done at {{makeRemaining(tasks)}}!">
+            <div title="If you start now, you'll be done at {{makeRemaining(tasks)}}!">
               Showing {{tasks.length}} Pomodoro{{(tasks.length > 1 ? "s" : "")}} with {{makeTime(tasks)}} of work remaining.
             </div>
             {{/tasks.length}}
+        </div>
 
         <div class="container">
+            <hr />
             <button class="btn btn-primary" on-tap="shortBreak">Short Break</button>
             <button class="btn btn-primary" on-tap="longBreak">Long Break</button>
         </div>
