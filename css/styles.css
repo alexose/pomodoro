@@ -13,6 +13,18 @@
     box-shadow: none; 
 }
 
+.btn:focus {
+    outline: none;
+}
+
+label{
+    margin: 10px 0;
+}
+
+input[type="checkbox"]{
+    margin: 5px;
+}
+
 table.tasks {
     width: 100%;
 }

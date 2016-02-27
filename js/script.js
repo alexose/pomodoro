@@ -114,16 +114,23 @@
             // if (!skip){
                 save.call(this);
             // }
+            updateVisible(this.data);
             this._super();
         }
     });
+
+    function updateVisible(data){
+        var show = data.instance.showCompleted;
+        data.instance.visible = data.instance.tasks.filter(function(d){ return show ? true : d.remaining; });
+    }
+
+    updateVisible(data);
 
     var ractive = new extended({
         el : 'application',
         template : '#pomodoro',
         data : data
     });
-
     // Find and trigger active tasks
     var start = data.instance.active;
     if (start){
@@ -154,6 +161,7 @@
     ractive.on('new'  , doNew);
     ractive.on('reset', doReset);
     ractive.on('clear', doClear);
+    ractive.on('toggleCompleted', doToggleCompleted);
     ractive.on('clearCompleted', doClearCompleted);
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
@@ -320,6 +328,12 @@
 
     function doClear(evt){
         evt.node.value = "";
+    }
+    
+    function doToggleCompleted(evt){
+      this.data.instance.showCompleted = !this.data.instance.showCompleted;
+      this.update();
+      return;
     }
 
     function doClearCompleted(evt){
