@@ -50,10 +50,12 @@
                             {{#active}}&raquo; {{/active}}
                             {{name}}
                         </span>
+                        <div class="actions">
+                            <div on-tap="pause" class="action action-pause glyphicon glyphicon-pause"></div>
+                            <div on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></div>
+                            <div on-tap="finish" class="action action-finish glyphicon glyphicon-check"></div>
+                        </div>
                     </td>
-                    <td on-tap="pause" class="action action-pause glyphicon glyphicon-pause"></td>
-                    <td on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></td>
-                    <td on-tap="finish" class="action action-finish glyphicon glyphicon-check"></td>
                 </tr>
                 {{/tasks}}
                 <tr class="add-new">
