@@ -76,9 +76,18 @@
             var remaining = tasks.filter(function(d){ return d.remaining; }),
                 total = remaining.length * pomodoro;
 
-            var endDate = new Date(+new Date() + total);
+            var endDate = new Date(+new Date() + total),
+                hours = endDate.getHours(),
+                am = hours < 12;
 
-            return endDate.getHours() + ":" + (endDate.getMinutes()<10?'0':'') + endDate.getMinutes();
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+
+            return hours
+                + ":"
+                + (endDate.getMinutes() < 10 ? '0' : '')
+                + endDate.getMinutes()
+                + (am ? ' AM' : ' PM');
         },
         makeTime : function(tasks){
             var remaining = tasks.filter(function(d){ return d.remaining; });
@@ -329,7 +338,7 @@
     function doClear(evt){
         evt.node.value = "";
     }
-    
+
     function doToggleCompleted(evt){
       this.data.instance.showCompleted = !this.data.instance.showCompleted;
       this.update();
