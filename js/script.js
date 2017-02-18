@@ -1,5 +1,5 @@
 (function(){
-    var pomodoro   = 1000//, * 60 * 25,
+    var pomodoro   = 1000 * 60 * 25,
         shortBreak = 1000 * 60 * 5,
         longBreak  = 1000 * 60 * 30,
         numBreaks  = 3,
@@ -175,6 +175,7 @@
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
     ractive.on('toggleCallback', toggleCallback);
+    ractive.on('updateCallback', updateCallback);
 
     var interval;
 
@@ -237,11 +238,13 @@
         doStop.call(this, evt, true);
         
         // Attempt to run custom code
-        var string = document.getElementById('callback-code').value;
-        try{
-          eval(string);
-        } catch(e){
-          console.log(e);
+        var string = this.data.instance.callback;
+        if (string){
+            try {
+                eval(string);
+            } catch(e) {
+                console.log(e);
+            }
         }
 
         if (this.data.instance.options.autobreak){
@@ -375,6 +378,11 @@
 
     function toggleCallback(evt){
         this.data.instance.showCallback = !this.data.instance.showCallback;
+        this.update();
+    }
+    
+    function updateCallback(evt){
+        this.data.instance.callback = evt.node.value;
         this.update();
     }
 })();

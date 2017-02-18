@@ -93,8 +93,8 @@
         {{#showCallback}}
         <div class="container" id="callback">
             <hr />
-            <p>Run some code when your pomodoro finishes:
-            <textarea id="callback-code"></textarea>
+            <p>Run some code when your pomodoro finishes:</p>
+            <textarea rows=5 cols=70 id="callback-code" on-change="updateCallback">{{callback}}</textarea>
         </div>
         {{/showCallback}}
 
