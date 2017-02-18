@@ -86,9 +86,18 @@
         <div class="container">
             <hr />
             <footer>
-                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data</a> or <a href="#" on-tap="clearCompleted">clear completed</a>.
+                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data</a>, <a href="#" on-tap="clearCompleted">clear completed</a>, or <a href="#" on-tap="toggleCallback">set up a callback</a>.
             </footer>
         </div>
+       
+        {{#showCallback}}
+        <div class="container" id="callback">
+            <hr />
+            <p>Run some code when your pomodoro finishes:
+            <textarea id="callback-code"></textarea>
+        </div>
+        {{/showCallback}}
+
 
     {{/instance}}</script>
     <script src="js/Ractive.min.js"></script> <!-- TOOO: switch to Ractive runtime -->
