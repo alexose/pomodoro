@@ -114,7 +114,7 @@
     };
 
     // Ensure defaults
-    data.instance.options = data.instance.options || { currentSound : 'sine1' };
+    data.instance.options = data.instance.options || { currentSound : 'sine1', autobreak: 'true' };
 
     var extended = Ractive.extend({
         update : function(skip){
