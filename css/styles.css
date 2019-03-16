@@ -9,12 +9,21 @@
 #progress {
     height: 10px;
     border-radius: 0;
-    -webkit-box-shadow: none; 
-    box-shadow: none; 
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 .btn:focus {
     outline: none;
+}
+
+.dotted {
+    position: absolute;
+    width: 1px;
+    border-left: 1px dotted #aaa;
+    top: 20px;
+    bottom: 20px;
+    left: -50px;
 }
 
 label{
@@ -27,6 +36,7 @@ input[type="checkbox"]{
 
 table.tasks {
     width: 100%;
+    position: relative;
 }
 
 table.tasks tr {
@@ -55,11 +65,32 @@ table.tasks tr.divider div.action.action-delete{
 
 table.tasks tr td.name {
     width: 100%;
+    position: relative;
 }
 
 table.tasks tr td.name span {
     display: inline-block;
     padding: .5em;
+}
+
+table.tasks tr td.name span.time {
+  font-size: 10px;
+  color: #aaa;
+  position: absolute;
+  left: -85px;
+  top: 4px;
+  width: 65px;
+  text-align: center;
+  padding: 10px;
+}
+
+table.tasks tr td.name span.time:not(:empty) {
+  background: #fff;
+}
+
+table.tasks tr:nth-child(3n) td.name span.time {
+  content: normal;
+  display: block;
 }
 
 table.tasks tr td.name span.active {

@@ -110,6 +110,27 @@
             }
 
             return string;
+        },
+        startTime : function(i){
+          if (i%3 !== 0 || i === 0) {
+            return '';
+          }
+
+          const d = new Date();
+          d.setMinutes(d.getMinutes() + i * 30);
+
+          var hours = d.getHours(),
+              am = hours < 12;
+
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+
+          return hours
+              + ":"
+              + (d.getMinutes() < 10 ? '0' : '')
+              + d.getMinutes()
+              + (am ? ' AM' : ' PM');
+
         }
     };
 
