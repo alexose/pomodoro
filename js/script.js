@@ -178,7 +178,6 @@
     ractive.on('updateCallback', updateCallback);
 
     var interval;
-    var beepInterval;
 
     function doStart(evt, cb){
         var c = evt.context,
@@ -186,10 +185,6 @@
             active = c.active,
             ractive = this,
             before = new Date();
-
-        if (beepInterval) {
-          clearInterval(beepInterval);
-        }
 
         if (!c.remaining){
             // TODO: Allow rename
@@ -230,10 +225,7 @@
                 } else {
                     completed.call(ractive, evt);
                 }
-               
-                beepInterval = setInterval(function(){
-                  sound.play();
-                }, 500);
+                sound.play();
             }
 
             ractive.update.call(ractive, true);
