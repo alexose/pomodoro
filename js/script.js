@@ -110,6 +110,27 @@
             }
 
             return string;
+        },
+        startTime : function(i){
+          if (i%3 !== 0 || i === 0) {
+            return '';
+          }
+
+          const d = new Date();
+          d.setMinutes(d.getMinutes() + i * 30);
+
+          var hours = d.getHours(),
+              am = hours < 12;
+
+          hours = hours % 12;
+          hours = hours ? hours : 12;
+
+          return hours
+              + ":"
+              + (d.getMinutes() < 10 ? '0' : '')
+              + d.getMinutes()
+              + (am ? ' AM' : ' PM');
+
         }
     };
 
@@ -182,7 +203,6 @@
 
     function doStart(evt, cb){
         var c = evt.context,
-            instance = this.data.instance,
             increment = 1000 * 1, // Every one second
             active = c.active,
             ractive = this,
@@ -230,7 +250,6 @@
                 sound.play();
             }
 
-            updateTimes(instance.tasks);
             ractive.update.call(ractive, true);
 
         }, increment);
@@ -280,30 +299,6 @@
 
         instance.breaks++;
         this.update();
-    }
-
-    function updateTimes(tasks){
-
-        tasks.forEach((task, i) => {
-            if (i%3 !== 0 || i === 0) {
-              return '';
-            }
-
-            const d = new Date();
-            d.setMinutes(d.getMinutes() + i * 30);
-
-            var hours = d.getHours(),
-                am = hours < 12;
-
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-
-            task.time = hours
-                + ":"
-                + (d.getMinutes() < 10 ? '0' : '')
-                + d.getMinutes()
-                + (am ? ' AM' : ' PM');
-        });
     }
 
     function doShortBreak(){

@@ -44,11 +44,11 @@
         <div class="container">
             <table class="tasks table">
                 <div class="dotted"></div>
-                {{#tasks}}
+                {{#tasks:i}}
                 <tr decorator='sortable' class="{{active ? 'active ' : ''}} {{!remaining && !showCompleted ? 'hidden' : ''}}" on-tap="start">
                     <td class="name">
                         <span class="time">
-                            {{time}}
+                            {{startTime(i)}}
                         </span>
                         <span class="{{remaining ? '' : 'finished'}}">
                             {{#active}}&raquo;{{/active}}
