@@ -68,7 +68,7 @@
 
             {{#tasks.length}}
             <div title="If you start now, you'll be done at {{makeRemaining(tasks)}}!">
-                Showing {{visible.length}} 
+                Showing {{visible.length}}
                 Pomodoro{{visible.length > 1 ? "s" : ""}}
                 with {{makeTime(visible)}} of work remaining.
             </div>
@@ -89,12 +89,13 @@
                 A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data</a>, <a href="#" on-tap="clearCompleted">clear completed</a>, or <a href="#" on-tap="toggleCallback">set up a callback</a>.
             </footer>
         </div>
-       
+
         {{#showCallback}}
         <div class="container" id="callback">
             <hr />
             <p>Run some code when your pomodoro finishes:</p>
             <textarea rows=5 cols=70 id="callback-code" on-change="updateCallback">{{callback}}</textarea>
+            <button class="btn btn-primary" on-tap="doCallback">Test!</button>
         </div>
         {{/showCallback}}
 

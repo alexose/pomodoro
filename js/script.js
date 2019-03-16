@@ -174,6 +174,7 @@
     ractive.on('clearCompleted', doClearCompleted);
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
+    ractive.on('doCallback', doCallback);
     ractive.on('toggleCallback', toggleCallback);
     ractive.on('updateCallback', updateCallback);
 
@@ -236,8 +237,11 @@
 
     function completed(evt){
         doStop.call(this, evt, true);
-        
-        // Attempt to run custom code
+        doCallback.call(this);
+    }
+
+    // Attempt to run custom code
+    function doCallback(){
         var string = this.data.instance.callback;
         if (string){
             try {
@@ -374,7 +378,7 @@
         this.data.instance.showCallback = !this.data.instance.showCallback;
         this.update();
     }
-    
+
     function updateCallback(evt){
         this.data.instance.callback = evt.node.value;
         this.update();
