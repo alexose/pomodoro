@@ -258,11 +258,11 @@
 
     function completed(evt){
         doStop.call(this, evt, true);
-        doCallback.call(this);
+        doCallback.call(this, evt);
     }
 
     // Attempt to run custom code
-    function doCallback(){
+    function doCallback(evt){
         var string = this.data.instance.callback;
         if (string){
             try {
