@@ -257,8 +257,8 @@
     }
 
     function completed(evt){
-        doStop.call(this, evt, true);
         doCallback.call(this, evt);
+        doStop.call(this, evt, true);
     }
 
     // Attempt to run custom code
