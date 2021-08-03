@@ -45,7 +45,7 @@
             <table class="tasks table">
                 <div class="dotted"></div>
                 {{#tasks:i}}
-                <tr decorator='sortable' class="{{active ? 'active ' : ''}} {{!remaining && !showCompleted ? 'hidden' : ''}}" on-tap="start">
+                <tr decorator='sortable' class="{{active ? 'active ' : ''}} {{!remaining && !showCompleted ? 'hidden' : ''}}" on-tap="start" on-click="start">
                     <td class="name">
                         <span class="time">
                             {{startTime(i)}}
@@ -55,9 +55,9 @@
                             {{name}}
                         </span>
                         <div class="actions">
-                            <div on-tap="pause" class="action action-pause glyphicon glyphicon-pause"></div>
-                            <div on-tap="delete" class="action action-delete glyphicon glyphicon-ban-circle"></div>
-                            <div on-tap="finish" class="action action-finish glyphicon glyphicon-check"></div>
+                            <div on-tap="pause" on-click="pause" class="action action-pause glyphicon glyphicon-pause"></div>
+                            <div on-tap="delete" on-click="delete" class="action action-delete glyphicon glyphicon-ban-circle"></div>
+                            <div on-tap="finish" on-click="finish" class="action action-finish glyphicon glyphicon-check"></div>
                         </div>
                     </td>
                 </tr>
@@ -81,16 +81,16 @@
 
         <div class="container">
             <hr />
-            <button class="btn btn-primary" on-tap="shortBreak">Short Break</button>
-            <button class="btn btn-primary" on-tap="longBreak">Long Break</button>
-            <button class="btn btn-secondary {{#showCompleted}}active{{/showCompleted}}" on-tap="toggleCompleted">Show Completed</button>
+            <button class="btn btn-primary" on-tap="shortBreak" on-click="shortBreak">Short Break</button>
+            <button class="btn btn-primary" on-tap="longBreak" on-click="longBreak">Long Break</button>
+            <button class="btn btn-secondary {{#showCompleted}}active{{/showCompleted}}" on-tap="toggleCompleted" on-click="toggleCompleted">Show Completed</button>
         </div>
 
 
         <div class="container">
             <hr />
             <footer>
-                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset">clear data</a>, <a href="#" on-tap="clearCompleted">clear completed</a>, or <a href="#" on-tap="toggleCallback">set up a callback</a>.
+                A fully-featured <a href="http://pomodorotechnique.com/">Pomodoro Technique</a> application.  Based on <a href="http://ractivejs.org">RactiveJS</a>.  Click to <a href="#" on-tap="reset" on-click="reset">clear data</a>, <a href="#" on-tap="clearCompleted" on-click="clearCompleted">clear completed</a>, or <a href="#" on-tap="toggleCallback" on-click="toggleCallback">set up a callback</a>.
             </footer>
         </div>
 
@@ -99,7 +99,7 @@
             <hr />
             <p>Run some code when your pomodoro finishes:</p>
             <textarea rows=5 cols=70 id="callback-code" on-change="updateCallback">{{callback}}</textarea>
-            <button class="btn btn-primary" on-tap="doCallback">Test!</button>
+            <button class="btn btn-primary" on-tap="doCallback" on-click="doCallback">Test!</button>
         </div>
         {{/showCallback}}
 
