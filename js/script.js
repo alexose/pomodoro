@@ -8,6 +8,27 @@
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
 
+    // Ask for desktop notification permissions on page load
+    // via https://stackoverflow.com/questions/2271156
+    document.addEventListener('DOMContentLoaded', function() {
+        if (!Notification) return;
+        if (Notification.permission !== 'granted') Notification.requestPermission();
+    });
+
+    function notify(evt) {
+        if (!Notification) return;
+        if (Notification.permission !== 'granted') Notification.requestPermission();
+        else {
+            var notification = new Notification('Pomodoro Complete!', {
+                icon: 'img/favicon.ico',
+                body: 'notify',
+            });
+            notification.onclick = function() {
+                window.parent.parent.focus();
+            };
+        }
+    }
+
     function load(){
         var result;
 
@@ -192,6 +213,7 @@
     ractive.on('reset', doReset);
     ractive.on('clear', doClear);
     ractive.on('toggleCompleted', doToggleCompleted);
+    ractive.on('toggleNotifications', doToggleNotifications);
     ractive.on('clearCompleted', doClearCompleted);
     ractive.on('delete', doDelete);
     ractive.on('finish', doFinish);
@@ -258,6 +280,8 @@
 
     function completed(evt){
         doCallback.call(this, evt);
+        notify();
+
         doStop.call(this, evt, true);
     }
 
@@ -372,6 +396,12 @@
 
     function doToggleCompleted(evt){
       this.data.instance.showCompleted = !this.data.instance.showCompleted;
+      this.update();
+      return;
+    }
+    
+    function doToggleNotifications(evt){
+      this.data.instance.notifcations = !this.data.instance.notifications;
       this.update();
       return;
     }
