@@ -8,25 +8,21 @@
     // Save and load methods for localStorage
     var namespace = 'pomodoro-app';
 
-    // Ask for desktop notification permissions on page load
-    // via https://stackoverflow.com/questions/2271156
-    document.addEventListener('DOMContentLoaded', function() {
-        if (!Notification) return;
-        if (Notification.permission !== 'granted') Notification.requestPermission();
-    });
+    function notify() {
+      var inst =  this.data.instance;
+      var done = inst.visible.find(d => d.remaining === 0);
+      var index = inst.tasks.indexOf(done);
+      var next = inst.tasks[index+1];
 
-    function notify(evt) {
-        if (!Notification) return;
-        if (Notification.permission !== 'granted') Notification.requestPermission();
-        else {
-            var notification = new Notification('Pomodoro Complete!', {
-                icon: 'img/favicon.ico',
-                body: 'notify',
-            });
-            notification.onclick = function() {
-                window.parent.parent.focus();
-            };
-        }
+      var notification = new Notification('Notification', {
+       icon: 'img/favicon.ico',
+       body: `Finished ${done.name}!\nNext up: ${next.name}`,
+      });
+
+      notification.onclick = () => {
+        doStart.call(ractive, { context : next });
+        // window.parent.parent.focus();
+      };
     }
 
     function load(){
@@ -401,7 +397,13 @@
     }
     
     function doToggleNotifications(evt){
-      this.data.instance.notifcations = !this.data.instance.notifications;
+      this.data.instance.notifications = !this.data.instance.notifications;
+   
+      if (this.data.instance.notifications) {
+        if (!Notification) alert('This browser does not support notifications.');
+        if (Notification.permission !== 'granted') Notification.requestPermission();
+      };
+
       this.update();
       return;
     }
