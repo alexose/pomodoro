@@ -273,7 +273,7 @@
 
     function completed(evt) {
         doCallback.call(this, evt);
-        notify();
+        notify.call(this);
 
         doStop.call(this, evt, true);
     }
