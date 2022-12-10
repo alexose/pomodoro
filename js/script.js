@@ -12,7 +12,7 @@
         var inst = this.data.instance;
         var done = inst.visible.find(d => d.remaining === 0) || {};
         var index = inst.tasks.indexOf(done);
-        var next = inst.tasks[index + 1];
+        var next = inst.tasks[index + 1] || {};
 
         var notification = new Notification("Notification", {
             icon: "img/favicon.ico",
