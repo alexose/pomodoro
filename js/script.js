@@ -16,7 +16,7 @@
 
         var notification = new Notification("Notification", {
             icon: "img/favicon.ico",
-            body: `Finished ${done.name}!\nNext up: ${next.name}`,
+            body: `Finished ${done?.name}!\nNext up: ${next?.name}`,
         });
 
         notification.onclick = () => {
