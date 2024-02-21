@@ -202,6 +202,7 @@
     });
 
     ractive.on("start", doStart);
+    ractive.on("save", doSave);
     ractive.on("break", doBreak);
     ractive.on("shortBreak", doShortBreak);
     ractive.on("longBreak", doLongBreak);
@@ -269,6 +270,10 @@
 
             ractive.update.call(ractive, true);
         }, increment);
+    }
+
+    function doSave(evt) {
+        save.call(this);
     }
 
     function completed(evt) {
